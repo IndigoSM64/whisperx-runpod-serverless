@@ -1,18 +1,17 @@
-FROM nvidia/cuda:12.1.1-cudnn8-runtime-ubuntu22.04
+# Use an official Python runtime as the base image
+FROM python:3.9-slim
 
+# Set the working directory in the container
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y \
-    python3 \
-    python3-pip \
-    ffmpeg \
-    git \
-    && rm -rf /var/lib/apt/lists/*
+# Copy the current directory contents into the container
+COPY . /app
 
-COPY requirements.txt .
-RUN pip3 install --upgrade pip \
-    && pip3 install -r requirements.txt
+# Install any needed packages specified in requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-COPY handler.py .
+# Make port 8080 available to the world outside this container
+EXPOSE 8080
 
-CMD ["python3", "handler.py"]
+# Run the application
+CMD ["python", "sentiment_analysis.py"]
