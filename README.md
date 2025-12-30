@@ -1,2 +1,2 @@
-# whisperx-runpod-serverless
-test whisper X serverless
+runpod
+openai-whisper
